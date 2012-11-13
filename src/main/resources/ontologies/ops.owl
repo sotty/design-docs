@@ -1,0 +1,1546 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ops: <http://asu.edu/sharpc2b/ops#> .
+@prefix : <http://asu.edu/sharpc2b/ops#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://asu.edu/sharpc2b/ops> .
+
+<http://asu.edu/sharpc2b/ops> rdf:type owl:Ontology ;
+                              
+                              owl:imports <http://asu.edu/sharpc2b/lmm> .
+
+
+#################################################################
+#
+#    Datatypes
+#
+#################################################################
+
+
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://asu.edu/sharpc2b/ops#testHasOpCode
+
+ops:testHasOpCode rdf:type owl:AsymmetricProperty ,
+                           owl:FunctionalProperty ,
+                           owl:IrreflexiveProperty ,
+                           owl:ObjectProperty ;
+                  
+                  rdfs:range <http://asu.edu/sharpc2b/lmm#ConceptCode> ;
+                  
+                  rdfs:domain ops:ExpressionTest .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://asu.edu/sharpc2b/ops#AbsCode
+
+ops:AbsCode rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:oneOf ( ops:absCode
+                                            )
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                  owl:hasValue "abs"
+                                ] ;
+            
+            rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AddCode
+
+ops:AddCode rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                  owl:hasValue "+"
+                                ] ,
+                                [ rdf:type owl:Class ;
+                                  owl:oneOf ( ops:addCode
+                                            )
+                                ] ;
+            
+            rdfs:subClassOf ops:OpCode ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
+                              owl:someValuesFrom ops:SumOperator
+                            ] .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AggAllCode
+
+ops:AggAllCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "agg_all"
+                                   ] ,
+                                   [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:aggAllCode
+                                               )
+                                   ] ;
+               
+               rdfs:subClassOf ops:AggregateCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AggAnyCode
+
+ops:AggAnyCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:aggAnyCode
+                                               )
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "agg_any"
+                                   ] ;
+               
+               rdfs:subClassOf ops:AggregateCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AggAverageCode
+
+ops:AggAverageCode rdf:type owl:Class ;
+                   
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:oneOf ( ops:aggAverageCode
+                                                   )
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                         owl:hasValue "agg_avg"
+                                       ] ;
+                   
+                   rdfs:subClassOf ops:AggregateCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AggMaxCode
+
+ops:AggMaxCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "agg_max"
+                                   ] ,
+                                   [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:aggMaxCode
+                                               )
+                                   ] ;
+               
+               rdfs:subClassOf ops:AggregateCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AggMinCode
+
+ops:AggMinCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:aggMinCode
+                                               )
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "agg_min"
+                                   ] ;
+               
+               rdfs:subClassOf ops:AggregateCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AggSumCode
+
+ops:AggSumCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "agg_sum"
+                                   ] ,
+                                   [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:aggSumCode
+                                               )
+                                   ] ;
+               
+               rdfs:subClassOf ops:AggregateCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AggregateCode
+
+ops:AggregateCode rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#AndCode
+
+ops:AndCode rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                  owl:hasValue "and"
+                                ] ,
+                                [ rdf:type owl:Class ;
+                                  owl:oneOf ( ops:andCode
+                                            )
+                                ] ;
+            
+            rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#BooleanType
+
+ops:BooleanType rdf:type owl:Class ;
+                
+                rdfs:subClassOf ops:Type .
+
+
+
+###  http://asu.edu/sharpc2b/ops#BooleanTypeCode
+
+ops:BooleanTypeCode rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                          owl:hasValue "boolean"
+                                        ] ,
+                                        [ rdf:type owl:Class ;
+                                          owl:oneOf ( ops:boolCode
+                                                    )
+                                        ] ;
+                    
+                    rdfs:subClassOf ops:TypeCode ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
+                                      owl:someValuesFrom ops:BooleanType
+                                    ] .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CastCode
+
+ops:CastCode rdf:type owl:Class ;
+             
+             owl:equivalentClass [ rdf:type owl:Class ;
+                                   owl:oneOf ( ops:castCode
+                                             )
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                   owl:hasValue "asA"
+                                 ] ;
+             
+             rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CeilCode
+
+ops:CeilCode rdf:type owl:Class ;
+             
+             owl:equivalentClass [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                   owl:hasValue "ceil"
+                                 ] ,
+                                 [ rdf:type owl:Class ;
+                                   owl:oneOf ( ops:ceilCode
+                                             )
+                                 ] ;
+             
+             rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CollectionExcludesAllCode
+
+ops:CollectionExcludesAllCode rdf:type owl:Class ;
+                              
+                              owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                    owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                                    owl:hasValue "excludesAll"
+                                                  ] ,
+                                                  [ rdf:type owl:Class ;
+                                                    owl:oneOf ( ops:collectionExcludesAllCode
+                                                              )
+                                                  ] ;
+                              
+                              rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CollectionExcludesCode
+
+ops:CollectionExcludesCode rdf:type owl:Class ;
+                           
+                           owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                 owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                                 owl:hasValue "excludes"
+                                               ] ,
+                                               [ rdf:type owl:Class ;
+                                                 owl:oneOf ( ops:collectionExcludesCode
+                                                           )
+                                               ] ;
+                           
+                           rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CollectionIncludesAllCode
+
+ops:CollectionIncludesAllCode rdf:type owl:Class ;
+                              
+                              owl:equivalentClass [ rdf:type owl:Class ;
+                                                    owl:oneOf ( ops:includesAllCode
+                                                              )
+                                                  ] ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                                    owl:hasValue "includesAll"
+                                                  ] ;
+                              
+                              rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CollectionIncludesCode
+
+ops:CollectionIncludesCode rdf:type owl:Class ;
+                           
+                           owl:equivalentClass [ rdf:type owl:Class ;
+                                                 owl:oneOf ( ops:collectionIncludesCode
+                                                           )
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                                 owl:hasValue "includes"
+                                               ] ;
+                           
+                           rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CollectionIsEmptyCode
+
+ops:CollectionIsEmptyCode rdf:type owl:Class ;
+                          
+                          owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                                owl:hasValue "empty"
+                                              ] ,
+                                              [ rdf:type owl:Class ;
+                                                owl:oneOf ( ops:collectionIsEmptyCode
+                                                          )
+                                              ] ;
+                          
+                          rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CollectionSizeCode
+
+ops:CollectionSizeCode rdf:type owl:Class ;
+                       
+                       owl:equivalentClass [ rdf:type owl:Restriction ;
+                                             owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                             owl:hasValue "size"
+                                           ] ,
+                                           [ rdf:type owl:Class ;
+                                             owl:oneOf ( ops:collectionSizeCode
+                                                       )
+                                           ] ;
+                       
+                       rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#CombineCode
+
+ops:CombineCode rdf:type owl:Class ;
+                
+                owl:equivalentClass [ rdf:type owl:Restriction ;
+                                      owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                      owl:hasValue "combine"
+                                    ] ,
+                                    [ rdf:type owl:Class ;
+                                      owl:oneOf ( ops:combineCode
+                                                )
+                                    ] ;
+                
+                rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ConcatCode
+
+ops:ConcatCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:concatCode
+                                               )
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "concat"
+                                   ] ;
+               
+               rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#DivCode
+
+ops:DivCode rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                  owl:hasValue "/"
+                                ] ,
+                                [ rdf:type owl:Class ;
+                                  owl:oneOf ( ops:divCode
+                                            )
+                                ] ;
+            
+            rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#EqualsCode
+
+ops:EqualsCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:equalsCode
+                                               )
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "=="
+                                   ] ;
+               
+               rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ExpressionTest
+
+ops:ExpressionTest rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                     owl:onProperty ops:testHasOpCode ;
+                                     owl:allValuesFrom ops:OpCode
+                                   ] .
+
+
+
+###  http://asu.edu/sharpc2b/ops#GreaterCode
+
+ops:GreaterCode rdf:type owl:Class ;
+                
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( ops:greaterCode
+                                                )
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                      owl:hasValue ">"
+                                    ] ;
+                
+                rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#GreaterEqualCode
+
+ops:GreaterEqualCode rdf:type owl:Class ;
+                     
+                     owl:equivalentClass [ rdf:type owl:Restriction ;
+                                           owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                           owl:hasValue ">="
+                                         ] ,
+                                         [ rdf:type owl:Class ;
+                                           owl:oneOf ( ops:greaterEqualCode
+                                                     )
+                                         ] ;
+                     
+                     rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ISumExprTest
+
+ops:ISumExprTest rdf:type owl:Class ;
+                 
+                 owl:equivalentClass [ rdf:type owl:Restriction ;
+                                       owl:onProperty ops:testHasOpCode ;
+                                       owl:someValuesFrom [ rdf:type owl:Class ;
+                                                            owl:intersectionOf ( ops:OpCode
+                                                                                 [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
+                                                                                   owl:someValuesFrom ops:IntSumOperator
+                                                                                 ]
+                                                                               )
+                                                          ]
+                                     ] ;
+                 
+                 rdfs:subClassOf ops:ExpressionTest ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty ops:testHasOpCode ;
+                                   owl:allValuesFrom [ rdf:type owl:Class ;
+                                                       owl:intersectionOf ( ops:OpCode
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
+                                                                              owl:someValuesFrom ops:IntSumOperator
+                                                                            ]
+                                                                          )
+                                                     ]
+                                 ] .
+
+
+
+###  http://asu.edu/sharpc2b/ops#IdentityCode
+
+ops:IdentityCode rdf:type owl:Class ;
+                 
+                 owl:equivalentClass [ rdf:type owl:Restriction ;
+                                       owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                       owl:hasValue "="
+                                     ] ,
+                                     [ rdf:type owl:Class ;
+                                       owl:oneOf ( ops:identityCode
+                                                 )
+                                     ] ;
+                 
+                 rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#InstanceOfCode
+
+ops:InstanceOfCode rdf:type owl:Class ;
+                   
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:oneOf ( ops:instanceOfCode
+                                                   )
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                         owl:hasValue "isA"
+                                       ] ;
+                   
+                   rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#IntAddCode
+
+ops:IntAddCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "i_+"
+                                   ] ,
+                                   [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:intAddCode
+                                               )
+                                   ] ;
+               
+               rdfs:subClassOf ops:OpCode ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
+                                 owl:someValuesFrom ops:IntSumOperator
+                               ] .
+
+
+
+###  http://asu.edu/sharpc2b/ops#IntDivCode
+
+ops:IntDivCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:intDivCode
+                                               )
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "div"
+                                   ] ;
+               
+               rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#IntModCode
+
+ops:IntModCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "%"
+                                   ] ,
+                                   [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:modCode
+                                               )
+                                   ] ;
+               
+               rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#IntMultiplyCode
+
+ops:IntMultiplyCode rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                          owl:hasValue "i_*"
+                                        ] ,
+                                        [ rdf:type owl:Class ;
+                                          owl:oneOf ( ops:intMultiplyCode
+                                                    )
+                                        ] ;
+                    
+                    rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#IntSubtractCode
+
+ops:IntSubtractCode rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                          owl:hasValue "i_-"
+                                        ] ,
+                                        [ rdf:type owl:Class ;
+                                          owl:oneOf ( ops:intSubtractCode
+                                                    )
+                                        ] ;
+                    
+                    rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#IntSumOperator
+
+ops:IntSumOperator rdf:type owl:Class ;
+                   
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://asu.edu/sharpc2b/lmm#isExpressedBy> ;
+                                         owl:someValuesFrom ops:IntAddCode
+                                       ] ;
+                   
+                   rdfs:subClassOf ops:SumOperator .
+
+
+
+###  http://asu.edu/sharpc2b/ops#LessCode
+
+ops:LessCode rdf:type owl:Class ;
+             
+             owl:equivalentClass [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                   owl:hasValue "<"
+                                 ] ,
+                                 [ rdf:type owl:Class ;
+                                   owl:oneOf ( ops:lessCode
+                                             )
+                                 ] ;
+             
+             rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#LessEqualCode
+
+ops:LessEqualCode rdf:type owl:Class ;
+                  
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:oneOf ( ops:lessEqualCode
+                                                  )
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                        owl:hasValue "<="
+                                      ] ;
+                  
+                  rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ListAppendCode
+
+ops:ListAppendCode rdf:type owl:Class ;
+                   
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:oneOf ( ops:listAppendCode
+                                                   )
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                         owl:hasValue "list_+"
+                                       ] ;
+                   
+                   rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ListAtCode
+
+ops:ListAtCode rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                     owl:hasValue "at"
+                                   ] ,
+                                   [ rdf:type owl:Class ;
+                                     owl:oneOf ( ops:listAtCode
+                                               )
+                                   ] ;
+               
+               rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ListIndexOfCode
+
+ops:ListIndexOfCode rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:oneOf ( ops:listIndexOfCode
+                                                    )
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                          owl:hasValue "indexof"
+                                        ] ;
+                    
+                    rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ListInsertAtCode
+
+ops:ListInsertAtCode rdf:type owl:Class ;
+                     
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:oneOf ( ops:listInsertAtCode
+                                                     )
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                           owl:hasValue "list_++"
+                                         ] ;
+                     
+                     rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ListPrependCode
+
+ops:ListPrependCode rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:oneOf ( ops:listPrependCode
+                                                    )
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                          owl:hasValue "+_list"
+                                        ] ;
+                    
+                    rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ListSublistCode
+
+ops:ListSublistCode rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:oneOf ( ops:listSublistCode
+                                                    )
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                          owl:hasValue "sublist"
+                                        ] ;
+                    
+                    rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#MultiplyCode
+
+ops:MultiplyCode rdf:type owl:Class ;
+                 
+                 owl:equivalentClass [ rdf:type owl:Restriction ;
+                                       owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                       owl:hasValue "*"
+                                     ] ,
+                                     [ rdf:type owl:Class ;
+                                       owl:oneOf ( ops:multiplyCode
+                                                 )
+                                     ] ;
+                 
+                 rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#NotCode
+
+ops:NotCode rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                  owl:hasValue "not"
+                                ] ,
+                                [ rdf:type owl:Class ;
+                                  owl:oneOf ( ops:notCode
+                                            )
+                                ] ;
+            
+            rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#NotEqualsCode
+
+ops:NotEqualsCode rdf:type owl:Class ;
+                  
+                  owl:equivalentClass [ rdf:type owl:Restriction ;
+                                        owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                        owl:hasValue "<>"
+                                      ] ,
+                                      [ rdf:type owl:Class ;
+                                        owl:oneOf ( ops:notEqualsCode
+                                                  )
+                                      ] ;
+                  
+                  rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#OpCode
+
+ops:OpCode rdf:type owl:Class ;
+           
+           rdfs:subClassOf <http://asu.edu/sharpc2b/lmm#ConceptCode> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty <http://asu.edu/sharpc2b/lmm#codeSystem> ;
+                             owl:hasValue "sharp"
+                           ] .
+
+
+
+###  http://asu.edu/sharpc2b/ops#Operator
+
+ops:Operator rdf:type owl:Class ;
+             
+             rdfs:subClassOf <http://asu.edu/sharpc2b/lmm#CodedConcept> .
+
+
+
+###  http://asu.edu/sharpc2b/ops#OrCode
+
+ops:OrCode rdf:type owl:Class ;
+           
+           owl:equivalentClass [ rdf:type owl:Class ;
+                                 owl:oneOf ( ops:orCode
+                                           )
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                 owl:hasValue "or"
+                               ] ;
+           
+           rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#SetEqualityCode
+
+ops:SetEqualityCode rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                          owl:hasValue "set_=="
+                                        ] ,
+                                        [ rdf:type owl:Class ;
+                                          owl:oneOf ( ops:setEqualityCode
+                                                    )
+                                        ] ;
+                    
+                    rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#SetUnionCode
+
+ops:SetUnionCode rdf:type owl:Class ;
+                 
+                 owl:equivalentClass [ rdf:type owl:Restriction ;
+                                       owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                       owl:hasValue "union"
+                                     ] ,
+                                     [ rdf:type owl:Class ;
+                                       owl:oneOf ( ops:setUnionCode
+                                                 )
+                                     ] ;
+                 
+                 rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#StringAddCode
+
+ops:StringAddCode rdf:type owl:Class ;
+                  
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:oneOf ( ops:stringAddCode
+                                                  )
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                        owl:hasValue "s_+"
+                                      ] ;
+                  
+                  rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#StringSizeCode
+
+ops:StringSizeCode rdf:type owl:Class ;
+                   
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                         owl:hasValue "str_len"
+                                       ] ,
+                                       [ rdf:type owl:Class ;
+                                         owl:oneOf ( ops:stringSizeCode
+                                                   )
+                                       ] ;
+                   
+                   rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#SubstringCode
+
+ops:SubstringCode rdf:type owl:Class ;
+                  
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:oneOf ( ops:subStringCode
+                                                  )
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                        owl:hasValue "substr"
+                                      ] ;
+                  
+                  rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#SubtractCode
+
+ops:SubtractCode rdf:type owl:Class ;
+                 
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:oneOf ( ops:subtractCode
+                                                 )
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty <http://asu.edu/sharpc2b/lmm#code> ;
+                                       owl:hasValue "-"
+                                     ] ;
+                 
+                 rdfs:subClassOf ops:OpCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#SumExprTest
+
+ops:SumExprTest rdf:type owl:Class ;
+                
+                owl:equivalentClass [ rdf:type owl:Restriction ;
+                                      owl:onProperty ops:testHasOpCode ;
+                                      owl:someValuesFrom [ rdf:type owl:Class ;
+                                                           owl:intersectionOf ( ops:OpCode
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
+                                                                                  owl:someValuesFrom ops:SumOperator
+                                                                                ]
+                                                                              )
+                                                         ]
+                                    ] ;
+                
+                rdfs:subClassOf ops:ExpressionTest ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty ops:testHasOpCode ;
+                                  owl:allValuesFrom [ rdf:type owl:Class ;
+                                                      owl:intersectionOf ( ops:OpCode
+                                                                           [ rdf:type owl:Restriction ;
+                                                                             owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
+                                                                             owl:someValuesFrom ops:SumOperator
+                                                                           ]
+                                                                         )
+                                                    ]
+                                ] .
+
+
+
+###  http://asu.edu/sharpc2b/ops#SumOperator
+
+ops:SumOperator rdf:type owl:Class ;
+                
+                owl:equivalentClass [ rdf:type owl:Restriction ;
+                                      owl:onProperty <http://asu.edu/sharpc2b/lmm#isExpressedBy> ;
+                                      owl:someValuesFrom ops:AddCode
+                                    ] ;
+                
+                rdfs:subClassOf ops:Operator .
+
+
+
+###  http://asu.edu/sharpc2b/ops#Type
+
+ops:Type rdf:type owl:Class ;
+         
+         rdfs:subClassOf <http://asu.edu/sharpc2b/lmm#CodedConcept> .
+
+
+
+###  http://asu.edu/sharpc2b/ops#TypeCode
+
+ops:TypeCode rdf:type owl:Class ;
+             
+             rdfs:subClassOf <http://asu.edu/sharpc2b/lmm#ConceptCode> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://asu.edu/sharpc2b/lmm#codeSystem> ;
+                               owl:hasValue "sharp"
+                             ] .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://asu.edu/sharpc2b/ops#absCode
+
+ops:absCode rdf:type ops:AbsCode ,
+                     owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#addCode
+
+ops:addCode rdf:type ops:AddCode ,
+                     owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#aggAllCode
+
+ops:aggAllCode rdf:type ops:AggAllCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#aggAnyCode
+
+ops:aggAnyCode rdf:type ops:AggAnyCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#aggAverageCode
+
+ops:aggAverageCode rdf:type ops:AggAverageCode ,
+                            owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#aggMaxCode
+
+ops:aggMaxCode rdf:type ops:AggMaxCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#aggMinCode
+
+ops:aggMinCode rdf:type ops:AggMinCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#aggSumCode
+
+ops:aggSumCode rdf:type ops:AggSumCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#andCode
+
+ops:andCode rdf:type ops:AndCode ,
+                     owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#boolCode
+
+ops:boolCode rdf:type ops:BooleanTypeCode ,
+                      owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#castCode
+
+ops:castCode rdf:type ops:CastCode ,
+                      owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#ceilCode
+
+ops:ceilCode rdf:type ops:CeilCode ,
+                      owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#collectionExcludesAllCode
+
+ops:collectionExcludesAllCode rdf:type ops:CollectionExcludesAllCode ,
+                                       owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#collectionExcludesCode
+
+ops:collectionExcludesCode rdf:type ops:CollectionExcludesCode ,
+                                    owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#collectionIncludesCode
+
+ops:collectionIncludesCode rdf:type ops:CollectionIncludesCode ,
+                                    owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#collectionIsEmptyCode
+
+ops:collectionIsEmptyCode rdf:type ops:CollectionIsEmptyCode ,
+                                   owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#collectionSizeCode
+
+ops:collectionSizeCode rdf:type ops:CollectionSizeCode ,
+                                owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#combineCode
+
+ops:combineCode rdf:type ops:CombineCode ,
+                         owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#concatCode
+
+ops:concatCode rdf:type ops:ConcatCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#divCode
+
+ops:divCode rdf:type ops:DivCode ,
+                     owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#equalsCode
+
+ops:equalsCode rdf:type ops:EqualsCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#expr
+
+ops:expr rdf:type ops:ExpressionTest ,
+                  owl:NamedIndividual ;
+         
+         ops:testHasOpCode ops:addCode .
+
+
+
+###  http://asu.edu/sharpc2b/ops#greaterCode
+
+ops:greaterCode rdf:type ops:GreaterCode ,
+                         owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#greaterEqualCode
+
+ops:greaterEqualCode rdf:type ops:GreaterEqualCode ,
+                              owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#identityCode
+
+ops:identityCode rdf:type ops:IdentityCode ,
+                          owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#includesAllCode
+
+ops:includesAllCode rdf:type ops:CollectionIncludesAllCode ,
+                             owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#instanceOfCode
+
+ops:instanceOfCode rdf:type ops:InstanceOfCode ,
+                            owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#intAddCode
+
+ops:intAddCode rdf:type ops:IntAddCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#intDivCode
+
+ops:intDivCode rdf:type ops:IntDivCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#intMultiplyCode
+
+ops:intMultiplyCode rdf:type ops:IntMultiplyCode ,
+                             owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#intSubtractCode
+
+ops:intSubtractCode rdf:type ops:IntSubtractCode ,
+                             owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#lessCode
+
+ops:lessCode rdf:type ops:LessCode ,
+                      owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#lessEqualCode
+
+ops:lessEqualCode rdf:type ops:LessEqualCode ,
+                           owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#listAppendCode
+
+ops:listAppendCode rdf:type ops:ListAppendCode ,
+                            owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#listAtCode
+
+ops:listAtCode rdf:type ops:ListAtCode ,
+                        owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#listIndexOfCode
+
+ops:listIndexOfCode rdf:type ops:ListIndexOfCode ,
+                             owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#listInsertAtCode
+
+ops:listInsertAtCode rdf:type ops:ListInsertAtCode ,
+                              owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#listPrependCode
+
+ops:listPrependCode rdf:type ops:ListPrependCode ,
+                             owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#listSublistCode
+
+ops:listSublistCode rdf:type ops:ListSublistCode ,
+                             owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#modCode
+
+ops:modCode rdf:type ops:IntModCode ,
+                     owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#multiplyCode
+
+ops:multiplyCode rdf:type ops:MultiplyCode ,
+                          owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#notCode
+
+ops:notCode rdf:type ops:NotCode ,
+                     owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#notEqualsCode
+
+ops:notEqualsCode rdf:type ops:NotEqualsCode ,
+                           owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#orCode
+
+ops:orCode rdf:type ops:OrCode ,
+                    owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#setEqualityCode
+
+ops:setEqualityCode rdf:type ops:SetEqualityCode ,
+                             owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#setUnionCode
+
+ops:setUnionCode rdf:type ops:SetUnionCode ,
+                          owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#stringAddCode
+
+ops:stringAddCode rdf:type ops:StringAddCode ,
+                           owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#stringSizeCode
+
+ops:stringSizeCode rdf:type ops:StringSizeCode ,
+                            owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#subStringCode
+
+ops:subStringCode rdf:type ops:SubstringCode ,
+                           owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#subtractCode
+
+ops:subtractCode rdf:type ops:SubtractCode ,
+                          owl:NamedIndividual .
+
+
+
+###  http://asu.edu/sharpc2b/ops#testCode
+
+ops:testCode rdf:type owl:NamedIndividual ,
+                      owl:Thing ;
+             
+             <http://asu.edu/sharpc2b/lmm#code> "+" .
+
+
+
+
+
+#################################################################
+#
+#    General axioms
+#
+#################################################################
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( <http://asu.edu/sharpc2b/lmm#Meaning>
+                <http://asu.edu/sharpc2b/lmm#Referent>
+                <http://asu.edu/sharpc2b/lmm#Symbol>
+              )
+] .
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ops:AbsCode
+                ops:AddCode
+                ops:AggAllCode
+                ops:AggAnyCode
+                ops:AggAverageCode
+                ops:AggMaxCode
+                ops:AggMinCode
+                ops:AggSumCode
+                ops:AndCode
+                ops:CastCode
+                ops:CeilCode
+                ops:CollectionExcludesAllCode
+                ops:CollectionExcludesCode
+                ops:CollectionIncludesAllCode
+                ops:CollectionIncludesCode
+                ops:CollectionIsEmptyCode
+                ops:CollectionSizeCode
+                ops:CombineCode
+                ops:ConcatCode
+                ops:DivCode
+                ops:EqualsCode
+                ops:GreaterCode
+                ops:GreaterEqualCode
+                ops:IdentityCode
+                ops:InstanceOfCode
+                ops:IntAddCode
+                ops:IntDivCode
+                ops:IntModCode
+                ops:IntMultiplyCode
+                ops:IntSubtractCode
+                ops:LessCode
+                ops:LessEqualCode
+                ops:ListAppendCode
+                ops:ListAtCode
+                ops:ListIndexOfCode
+                ops:ListInsertAtCode
+                ops:ListPrependCode
+                ops:ListSublistCode
+                ops:MultiplyCode
+                ops:NotCode
+                ops:NotEqualsCode
+                ops:OrCode
+                ops:SetEqualityCode
+                ops:SetUnionCode
+                ops:StringAddCode
+                ops:StringSizeCode
+                ops:SubstringCode
+                ops:SubtractCode
+              )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( ops:absCode
+                        ops:addCode
+                        ops:aggAllCode
+                        ops:aggAnyCode
+                        ops:aggAverageCode
+                        ops:aggMaxCode
+                        ops:aggMinCode
+                        ops:aggSumCode
+                        ops:andCode
+                        ops:castCode
+                        ops:ceilCode
+                        ops:collectionExcludesAllCode
+                        ops:collectionExcludesCode
+                        ops:collectionIncludesCode
+                        ops:collectionIsEmptyCode
+                        ops:collectionSizeCode
+                        ops:combineCode
+                        ops:concatCode
+                        ops:divCode
+                        ops:equalsCode
+                        ops:expr
+                        ops:greaterCode
+                        ops:greaterEqualCode
+                        ops:identityCode
+                        ops:includesAllCode
+                        ops:instanceOfCode
+                        ops:intAddCode
+                        ops:intDivCode
+                        ops:intMultiplyCode
+                        ops:intSubtractCode
+                        ops:lessCode
+                        ops:lessEqualCode
+                        ops:listAppendCode
+                        ops:listAtCode
+                        ops:listIndexOfCode
+                        ops:listInsertAtCode
+                        ops:listPrependCode
+                        ops:listSublistCode
+                        ops:modCode
+                        ops:multiplyCode
+                        ops:notCode
+                        ops:notEqualsCode
+                        ops:orCode
+                        ops:setEqualityCode
+                        ops:setUnionCode
+                        ops:stringAddCode
+                        ops:stringSizeCode
+                        ops:subStringCode
+                        ops:subtractCode
+                      )
+] .
+
+
+
+
+###  Generated by the OWL API (version 3.2.3.1824) http://owlapi.sourceforge.net
+
