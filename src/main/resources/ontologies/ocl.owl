@@ -96,19 +96,6 @@ ocl:representsAction rdf:type owl:ObjectProperty ;
 
 
 
-###  http://asu.edu/sharpc2b/ocl#returnTypeCode
-
-ocl:returnTypeCode rdf:type owl:AsymmetricProperty ,
-                            owl:FunctionalProperty ,
-                            owl:IrreflexiveProperty ,
-                            owl:ObjectProperty ;
-                   
-                   rdfs:range <http://asu.edu/sharpc2b/lmm#ConceptCode> ;
-                   
-                   rdfs:domain ocl:OCLTypedExpression .
-
-
-
 ###  http://asu.edu/sharpc2b/ocl#sourceExpr
 
 ocl:sourceExpr rdf:type owl:AsymmetricProperty ,
@@ -163,43 +150,45 @@ ocl:AnyType rdf:type owl:Class ;
 
 
 
-###  http://asu.edu/sharpc2b/ocl#AssertExpr
+###  http://asu.edu/sharpc2b/ocl#AssertPayloadExpr
 
-ocl:AssertExpr rdf:type owl:Class ;
-               
-               owl:equivalentClass [ rdf:type owl:Class ;
-                                     owl:intersectionOf ( ocl:UpdateStateExpr
-                                                          [ rdf:type owl:Restriction ;
-                                                            owl:onProperty ocl:representsAction ;
-                                                            owl:someValuesFrom prr:Assert
-                                                          ]
-                                                        )
-                                   ] ;
-               
-               rdfs:subClassOf ocl:UpdateStateExpr .
+ocl:AssertPayloadExpr rdf:type owl:Class ;
+                      
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:intersectionOf ( ocl:UpdateStateExpr
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ocl:representsAction ;
+                                                                   owl:someValuesFrom prr:Assert
+                                                                 ]
+                                                               )
+                                          ] ;
+                      
+                      rdfs:subClassOf ocl:UpdateStateExpr .
 
 
 
-###  http://asu.edu/sharpc2b/ocl#AssignExpr
+###  http://asu.edu/sharpc2b/ocl#AssignPayloadExpr
 
-ocl:AssignExpr rdf:type owl:Class ;
-               
-               owl:equivalentClass [ rdf:type owl:Class ;
-                                     owl:intersectionOf ( ocl:ImperativeExpr
-                                                          [ rdf:type owl:Restriction ;
-                                                            owl:onProperty ocl:representsAction ;
-                                                            owl:someValuesFrom prr:BindingAction
-                                                          ]
-                                                        )
-                                   ] ;
-               
-               rdfs:subClassOf ocl:ImperativeExpr .
+ocl:AssignPayloadExpr rdf:type owl:Class ;
+                      
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:intersectionOf ( ocl:ImperativeExpr
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ocl:representsAction ;
+                                                                   owl:someValuesFrom prr:BindingAction
+                                                                 ]
+                                                               )
+                                          ] ;
+                      
+                      rdfs:subClassOf ocl:ImperativeExpr .
 
 
 
 ###  http://asu.edu/sharpc2b/ocl#BagType
 
 ocl:BagType rdf:type owl:Class ;
+            
+            owl:equivalentClass <http://asu.edu/sharpc2b/ops#Bag> ;
             
             rdfs:subClassOf ocl:CollectionType .
 
@@ -217,7 +206,7 @@ ocl:BooleanLiteralExpr rdf:type owl:Class ;
 
 ocl:BooleanType rdf:type owl:Class ;
                 
-                owl:equivalentClass <http://asu.edu/sharpc2b/ops#BooleanType> ;
+                owl:equivalentClass <http://asu.edu/sharpc2b/ops#Boolean> ;
                 
                 rdfs:subClassOf ocl:PrimitiveType .
 
@@ -304,24 +293,26 @@ ocl:IntLiteralExpr rdf:type owl:Class ;
 
 ocl:IntegerType rdf:type owl:Class ;
                 
+                owl:equivalentClass <http://asu.edu/sharpc2b/ops#Integer> ;
+                
                 rdfs:subClassOf ocl:RealType .
 
 
 
-###  http://asu.edu/sharpc2b/ocl#InvokeExpr
+###  http://asu.edu/sharpc2b/ocl#InvokePayloadExpr
 
-ocl:InvokeExpr rdf:type owl:Class ;
-               
-               owl:equivalentClass [ rdf:type owl:Class ;
-                                     owl:intersectionOf ( ocl:ImperativeExpr
-                                                          [ rdf:type owl:Restriction ;
-                                                            owl:onProperty ocl:representsAction ;
-                                                            owl:someValuesFrom prr:InvokeAction
-                                                          ]
-                                                        )
-                                   ] ;
-               
-               rdfs:subClassOf ocl:ImperativeExpr .
+ocl:InvokePayloadExpr rdf:type owl:Class ;
+                      
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:intersectionOf ( ocl:ImperativeExpr
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ocl:representsAction ;
+                                                                   owl:someValuesFrom prr:InvokeAction
+                                                                 ]
+                                                               )
+                                          ] ;
+                      
+                      rdfs:subClassOf ocl:ImperativeExpr .
 
 
 
@@ -342,7 +333,7 @@ ocl:IteratorExpr rdf:type owl:Class ;
 
 ocl:LiteralExpr rdf:type owl:Class ;
                 
-                rdfs:subClassOf ocl:OCLTypedExpression .
+                rdfs:subClassOf ocl:OCLExpression .
 
 
 
@@ -371,6 +362,8 @@ ocl:NavigationCallExpr rdf:type owl:Class ;
 
 ocl:NumberType rdf:type owl:Class ;
                
+               owl:equivalentClass <http://asu.edu/sharpc2b/ops#Number> ;
+               
                rdfs:subClassOf ocl:PrimitiveType .
 
 
@@ -380,14 +373,6 @@ ocl:NumberType rdf:type owl:Class ;
 ocl:NumericLiteralExpr rdf:type owl:Class ;
                        
                        rdfs:subClassOf ocl:PrimitiveLiteralExpr .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#OCLBaseOperation
-
-ocl:OCLBaseOperation rdf:type owl:Class ;
-                     
-                     rdfs:subClassOf <http://asu.edu/sharpc2b/lmm#CodedConcept> .
 
 
 
@@ -401,38 +386,7 @@ ocl:OCLExpression rdf:type owl:Class .
 
 ocl:OCLLogicalExpression rdf:type owl:Class ;
                          
-                         owl:equivalentClass [ rdf:type owl:Restriction ;
-                                               owl:onProperty ocl:returnTypeCode ;
-                                               owl:someValuesFrom [ rdf:type owl:Class ;
-                                                                    owl:intersectionOf ( <http://asu.edu/sharpc2b/ops#TypeCode>
-                                                                                         [ rdf:type owl:Restriction ;
-                                                                                           owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
-                                                                                           owl:someValuesFrom ocl:BooleanType
-                                                                                         ]
-                                                                                       )
-                                                                  ]
-                                             ] ;
-                         
-                         rdfs:subClassOf ocl:OCLTypedExpression ,
-                                         [ rdf:type owl:Restriction ;
-                                           owl:onProperty ocl:returnTypeCode ;
-                                           owl:allValuesFrom [ rdf:type owl:Class ;
-                                                               owl:intersectionOf ( <http://asu.edu/sharpc2b/ops#TypeCode>
-                                                                                    [ rdf:type owl:Restriction ;
-                                                                                      owl:onProperty <http://asu.edu/sharpc2b/lmm#expresses> ;
-                                                                                      owl:someValuesFrom ocl:BooleanType
-                                                                                    ]
-                                                                                  )
-                                                             ]
-                                         ] .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#OCLObjectExpression
-
-ocl:OCLObjectExpression rdf:type owl:Class ;
-                        
-                        rdfs:subClassOf ocl:OCLTypedExpression .
+                         rdfs:subClassOf ocl:OCLExpression .
 
 
 
@@ -440,10 +394,7 @@ ocl:OCLObjectExpression rdf:type owl:Class ;
 
 ocl:OCLTypedExpression rdf:type owl:Class ;
                        
-                       owl:equivalentClass [ rdf:type owl:Restriction ;
-                                             owl:onProperty ocl:returnTypeCode ;
-                                             owl:cardinality "1"^^xsd:nonNegativeInteger
-                                           ] ;
+                       owl:equivalentClass <http://asu.edu/sharpc2b/ops#Expression> ;
                        
                        rdfs:subClassOf ocl:OCLExpression .
 
@@ -466,6 +417,8 @@ ocl:OperationCallExpr rdf:type owl:Class ;
 ###  http://asu.edu/sharpc2b/ocl#OrderedSetType
 
 ocl:OrderedSetType rdf:type owl:Class ;
+                   
+                   owl:equivalentClass <http://asu.edu/sharpc2b/ops#OrderedSet> ;
                    
                    rdfs:subClassOf ocl:CollectionType .
 
@@ -507,30 +460,34 @@ ocl:RealLiteralExpr rdf:type owl:Class ;
 
 ocl:RealType rdf:type owl:Class ;
              
+             owl:equivalentClass <http://asu.edu/sharpc2b/ops#Real> ;
+             
              rdfs:subClassOf ocl:NumberType .
 
 
 
-###  http://asu.edu/sharpc2b/ocl#RetractExpr
+###  http://asu.edu/sharpc2b/ocl#RetractPayloadExpr
 
-ocl:RetractExpr rdf:type owl:Class ;
-                
-                owl:equivalentClass [ rdf:type owl:Class ;
-                                      owl:intersectionOf ( ocl:UpdateStateExpr
-                                                           [ rdf:type owl:Restriction ;
-                                                             owl:onProperty ocl:representsAction ;
-                                                             owl:someValuesFrom prr:Retract
-                                                           ]
-                                                         )
-                                    ] ;
-                
-                rdfs:subClassOf ocl:UpdateStateExpr .
+ocl:RetractPayloadExpr rdf:type owl:Class ;
+                       
+                       owl:equivalentClass [ rdf:type owl:Class ;
+                                             owl:intersectionOf ( ocl:UpdateStateExpr
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty ocl:representsAction ;
+                                                                    owl:someValuesFrom prr:Retract
+                                                                  ]
+                                                                )
+                                           ] ;
+                       
+                       rdfs:subClassOf ocl:UpdateStateExpr .
 
 
 
 ###  http://asu.edu/sharpc2b/ocl#SequenceType
 
 ocl:SequenceType rdf:type owl:Class ;
+                 
+                 owl:equivalentClass <http://asu.edu/sharpc2b/ops#List> ;
                  
                  rdfs:subClassOf ocl:CollectionType .
 
@@ -539,6 +496,8 @@ ocl:SequenceType rdf:type owl:Class ;
 ###  http://asu.edu/sharpc2b/ocl#SetType
 
 ocl:SetType rdf:type owl:Class ;
+            
+            owl:equivalentClass <http://asu.edu/sharpc2b/ops#Set> ;
             
             rdfs:subClassOf ocl:CollectionType .
 
@@ -556,6 +515,8 @@ ocl:StringLiteralExpr rdf:type owl:Class ;
 
 ocl:StringType rdf:type owl:Class ;
                
+               owl:equivalentClass <http://asu.edu/sharpc2b/ops#String> ;
+               
                rdfs:subClassOf ocl:PrimitiveType .
 
 
@@ -568,36 +529,30 @@ ocl:TerminologyEntryLiteralExpr rdf:type owl:Class ;
 
 
 
-###  http://asu.edu/sharpc2b/ocl#TypeExpr
-
-ocl:TypeExpr rdf:type owl:Class ;
-             
-             rdfs:subClassOf ocl:OCLTypedExpression .
-
-
-
 ###  http://asu.edu/sharpc2b/ocl#TypeType
 
 ocl:TypeType rdf:type owl:Class ;
+             
+             owl:equivalentClass <http://asu.edu/sharpc2b/ops#Class> ;
              
              rdfs:subClassOf ocl:ExprType .
 
 
 
-###  http://asu.edu/sharpc2b/ocl#UpdateExpr
+###  http://asu.edu/sharpc2b/ocl#UpdatePayloadExpr
 
-ocl:UpdateExpr rdf:type owl:Class ;
-               
-               owl:equivalentClass [ rdf:type owl:Class ;
-                                     owl:intersectionOf ( ocl:UpdateStateExpr
-                                                          [ rdf:type owl:Restriction ;
-                                                            owl:onProperty ocl:representsAction ;
-                                                            owl:someValuesFrom prr:Modify
-                                                          ]
-                                                        )
-                                   ] ;
-               
-               rdfs:subClassOf ocl:UpdateStateExpr .
+ocl:UpdatePayloadExpr rdf:type owl:Class ;
+                      
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:intersectionOf ( ocl:UpdateStateExpr
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ocl:representsAction ;
+                                                                   owl:someValuesFrom prr:Modify
+                                                                 ]
+                                                               )
+                                          ] ;
+                      
+                      rdfs:subClassOf ocl:UpdateStateExpr .
 
 
 
@@ -626,11 +581,68 @@ ocl:VariableExpr rdf:type owl:Class ;
 
 ocl:VoidType rdf:type owl:Class ;
              
+             owl:equivalentClass <http://asu.edu/sharpc2b/ops#Void> ;
+             
              rdfs:subClassOf ocl:ExprType .
 
 
 
-###  http://asu.edu/sharpc2b/ops#BooleanType
+###  http://asu.edu/sharpc2b/ops#Bag
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Boolean
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Class
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Expression
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Integer
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#List
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Number
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#OrderedSet
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Real
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Set
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#String
+
+
+
+
+###  http://asu.edu/sharpc2b/ops#Void
 
 
 
@@ -674,25 +686,6 @@ prr:Modify rdf:type owl:Class .
 ###  http://asu.edu/sharpc2b/prr#Retract
 
 prr:Retract rdf:type owl:Class .
-
-
-
-
-
-#################################################################
-#
-#    General axioms
-#
-#################################################################
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( ocl:CallExpr
-                ocl:LiteralExpr
-                ocl:TypeExpr
-                ocl:VariableExpr
-              )
-] .
 
 
 
