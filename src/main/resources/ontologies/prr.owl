@@ -31,6 +31,19 @@
 
 
 
+###  http://asu.edu/sharpc2b/prr#bodyExpression
+
+:bodyExpression rdf:type owl:AsymmetricProperty ,
+                         owl:FunctionalProperty ,
+                         owl:IrreflexiveProperty ,
+                         owl:ObjectProperty ;
+                
+                rdfs:range <http://asu.edu/sharpc2b/ocl#OCLExpression> ;
+                
+                rdfs:domain :ExpressionInOCL .
+
+
+
 ###  http://asu.edu/sharpc2b/prr#checks
 
 :checks rdf:type owl:AsymmetricProperty ,
@@ -135,48 +148,6 @@
 #################################################################
 
 
-###  http://asu.edu/sharpc2b/ocl#AssertExpr
-
-<http://asu.edu/sharpc2b/ocl#AssertExpr> rdfs:subClassOf :AssertExpr .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#AssignExpr
-
-<http://asu.edu/sharpc2b/ocl#AssignExpr> rdfs:subClassOf :AssignExpr .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#ImperativeExpr
-
-<http://asu.edu/sharpc2b/ocl#ImperativeExpr> rdfs:subClassOf :ImperativeExpr .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#InvokeExpr
-
-<http://asu.edu/sharpc2b/ocl#InvokeExpr> rdfs:subClassOf :InvokeExpr .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#RetractExpr
-
-<http://asu.edu/sharpc2b/ocl#RetractExpr> rdfs:subClassOf :RetractExpr .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#UpdateExpr
-
-<http://asu.edu/sharpc2b/ocl#UpdateExpr> rdfs:subClassOf :UpdateExpr .
-
-
-
-###  http://asu.edu/sharpc2b/ocl#UpdateStateExpr
-
-<http://asu.edu/sharpc2b/ocl#UpdateStateExpr> rdfs:subClassOf :UpdateStateExpr .
-
-
-
 ###  http://asu.edu/sharpc2b/prr#Assert
 
 :Assert rdf:type owl:Class ;
@@ -194,7 +165,11 @@
 
 :AssertExpr rdf:type owl:Class ;
             
-            rdfs:subClassOf :UpdateStateExpr .
+            rdfs:subClassOf :UpdateStateExpr ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :bodyExpression ;
+                              owl:allValuesFrom <http://asu.edu/sharpc2b/ocl#AssertPayloadExpr>
+                            ] .
 
 
 
@@ -202,7 +177,11 @@
 
 :AssignExpr rdf:type owl:Class ;
             
-            rdfs:subClassOf :ImperativeExpr .
+            rdfs:subClassOf :ImperativeExpr ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :bodyExpression ;
+                              owl:allValuesFrom <http://asu.edu/sharpc2b/ocl#AssignPayloadExpr>
+                            ] .
 
 
 
@@ -264,6 +243,20 @@
 
 
 
+###  http://asu.edu/sharpc2b/prr#ExpressionInOCL
+
+:ExpressionInOCL rdf:type owl:Class ;
+                 
+                 owl:equivalentClass [ rdf:type owl:Restriction ;
+                                       owl:onProperty :bodyExpression ;
+                                       owl:onClass <http://asu.edu/sharpc2b/ocl#OCLExpression> ;
+                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ;
+                 
+                 rdfs:subClassOf :Expression .
+
+
+
 ###  http://asu.edu/sharpc2b/prr#ImperativeAction
 
 :ImperativeAction rdf:type owl:Class ;
@@ -281,7 +274,7 @@
 
 :ImperativeExpr rdf:type owl:Class ;
                 
-                rdfs:subClassOf :Expression .
+                rdfs:subClassOf :ExpressionInOCL .
 
 
 
@@ -315,7 +308,11 @@
 
 :InvokeExpr rdf:type owl:Class ;
             
-            rdfs:subClassOf :ImperativeExpr .
+            rdfs:subClassOf :ImperativeExpr ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :bodyExpression ;
+                              owl:allValuesFrom <http://asu.edu/sharpc2b/ocl#InvokePayloadExpr>
+                            ] .
 
 
 
@@ -404,7 +401,11 @@
 
 :RetractExpr rdf:type owl:Class ;
              
-             rdfs:subClassOf :UpdateStateExpr .
+             rdfs:subClassOf :UpdateStateExpr ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :bodyExpression ;
+                               owl:allValuesFrom <http://asu.edu/sharpc2b/ocl#RetractPayloadExpr>
+                             ] .
 
 
 
@@ -458,7 +459,11 @@
 
 :UpdateExpr rdf:type owl:Class ;
             
-            rdfs:subClassOf :UpdateStateExpr .
+            rdfs:subClassOf :UpdateStateExpr ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :bodyExpression ;
+                              owl:allValuesFrom <http://asu.edu/sharpc2b/ocl#UpdatePayloadExpr>
+                            ] .
 
 
 
@@ -466,7 +471,7 @@
 
 :UpdateStateExpr rdf:type owl:Class ;
                  
-                 rdfs:subClassOf :Expression .
+                 rdfs:subClassOf :ExpressionInOCL .
 
 
 

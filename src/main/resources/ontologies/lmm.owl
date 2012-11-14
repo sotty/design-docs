@@ -79,7 +79,6 @@ lmm:isDenotedBy rdf:type owl:ObjectProperty ;
 ###  http://asu.edu/sharpc2b/lmm#isExpressedBy
 
 lmm:isExpressedBy rdf:type owl:AsymmetricProperty ,
-                           owl:InverseFunctionalProperty ,
                            owl:IrreflexiveProperty ,
                            owl:ObjectProperty ;
                   
